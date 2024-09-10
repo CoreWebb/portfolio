@@ -1,0 +1,354 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Core Web - Web Developer</title>
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2ecc71;
+            --accent-color: #e74c3c;
+            --text-color: #333;
+            --light-bg: #ecf0f1;
+            --dark-bg: #34495e;
+        }
+
+        @keyframes gradient {
+            0% {background-position: 0% 50%;}
+            50% {background-position: 100% 50%;}
+            100% {background-position: 0% 50%;}
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            color: var(--text-color);
+            background-color: var(--light-bg);
+        }
+
+        header {
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+            color: #fff;
+            text-align: center;
+            padding: 3rem;
+            position: relative;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 3.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        header p {
+            font-size: 1.4rem;
+            margin-top: 0.5rem;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 1200px;
+            margin: auto;
+            padding: 40px 20px;
+        }
+
+        /* Fancy Tab Styles */
+        .tabs {
+            margin-top: -50px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .tab-links {
+            display: flex;
+            justify-content: space-around;
+            border-bottom: 2px solid var(--light-bg);
+            padding-bottom: 10px;
+        }
+
+        .tab-link {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: bold;
+            padding: 10px 20px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tab-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            opacity: 0;
+            z-index: -1;
+            transition: opacity 0.3s ease;
+            animation: gradient 15s ease infinite;
+        }
+
+        .tab-link:hover::before,
+        .tab-link.active::before {
+            opacity: 1;
+        }
+
+        .tab-link:hover,
+        .tab-link.active {
+            color: #fff;
+        }
+
+        .tab-content {
+            display: none;
+            padding: 20px 0;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        h2 {
+            color: var(--primary-color);
+            border-bottom: 3px solid var(--secondary-color);
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+
+        /* Rest of the styles remain the same */
+        .price-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 15px;
+        }
+
+        .price-table th, .price-table td {
+            padding: 20px;
+            text-align: left;
+        }
+
+        .price-table th {
+            background-color: var(--secondary-color);
+            color: #fff;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .price-table tr {
+            background-color: #fff;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .price-table tr:hover {
+            transform: scale(1.03);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .portfolio-item {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .portfolio-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+
+        .portfolio-item img {
+            max-width: 300px;
+            border-radius: 8px;
+            margin-right: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .portfolio-item:hover img {
+            transform: scale(1.05);
+        }
+
+        #contact-form {
+            display: grid;
+            gap: 20px;
+        }
+
+        #contact-form input, #contact-form textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid var(--light-bg);
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        #contact-form input:focus, #contact-form textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(52,152,219,0.3);
+        }
+
+        #contact-form button {
+            background-color: var(--accent-color);
+            color: #fff;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+
+        #contact-form button:hover {
+            background-color: #c0392b;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                width: 95%;
+            }
+
+            .portfolio-item {
+                flex-direction: column;
+            }
+
+            .portfolio-item img {
+                margin-right: 0;
+                margin-bottom: 15px;
+                max-width: 100%;
+            }
+
+            .tab-links {
+                flex-wrap: wrap;
+            }
+
+            .tab-link {
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Core Web </h1>
+        <p>Bringing Ideas to Life Through Code</p>
+    </header>
+
+    <div class="container">
+        <div class="tabs">
+            <div class="tab-links">
+                <a href="#about" class="tab-link active" data-tab="about">About</a>
+                <a href="#services" class="tab-link" data-tab="services">Services</a>
+                <a href="#portfolio" class="tab-link" data-tab="portfolio">Portfolio</a>
+                <a href="#contact" class="tab-link" data-tab="contact">Contact</a>
+            </div>
+
+            <div id="about" class="tab-content active">
+                <h2>About Me</h2>
+                <p>I'm a passionate web developer with a knack for creating stunning, responsive websites that leave a lasting impression. With years of experience and a keen eye for design, I bring your digital visions to life.</p>
+            </div>
+
+            <div id="services" class="tab-content">
+                <h2>Services & Pricing</h2>
+                <table class="price-table">
+                    <tr>
+                        <th>Service</th>
+                        <th>Description</th>
+                        <th>Price</th>
+                    </tr>
+                    <tr>
+                        <td>Basic Website</td>
+                        <td>5-page responsive website with modern design</td>
+                        <td>$300</td>
+                    </tr>
+                    <tr>
+                        <td>E-commerce Site</td>
+                        <td>Full-featured online store with payment integration</td>
+                        <td>$700</td>
+                    </tr>
+                    <tr>
+                        <td>Custom Web App</td>
+                        <td>Tailored web application with advanced functionality</td>
+                        <td>From $1000</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div id="portfolio" class="tab-content">
+                <h2>Portfolio</h2>
+                <div class="portfolio-item">
+                    <img src="/api/placeholder/300/200" alt="Project 1 Screenshot">
+                    <div>
+                        <h3>E-commerce Wonder</h3>
+                        <p>A fully responsive e-commerce platform built with React and Node.js, featuring seamless payment integration and an intuitive user interface.</p>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <img src="/api/placeholder/300/200" alt="Project 2 Screenshot">
+                    <div>
+                        <h3>Task Master Pro</h3>
+                        <p>A sleek task management web app with real-time updates, user authentication, and a powerful backend powered by MongoDB and Express.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="contact" class="tab-content">
+                <h2>Get In Touch</h2>
+                <form id="contact-form">
+                    <input type="text" id="name" placeholder="Your Name" required>
+                    <input type="email" id="email" placeholder="Your Email" required>
+                    <textarea id="message" placeholder="Your Message" required></textarea>
+                    <button type="submit">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const tabLinks = document.querySelectorAll('.tab-link');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const tabId = link.getAttribute('data-tab');
+                    
+                    tabLinks.forEach(l => l.classList.remove('active'));
+                    tabContents.forEach(c => c.classList.remove('active'));
+                    
+                    link.classList.add('active');
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+
+            document.getElementById('contact-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('Thank you for your message! I will get back to you soon.');
+                this.reset();
+            });
+        });
+    </script>
+</body>
+</html>
